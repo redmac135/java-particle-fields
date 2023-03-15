@@ -56,9 +56,9 @@ public class Particle {
             double acc = field.strength / Math.pow(deltad, 2);
             double angle = Math.atan(Math.abs(deltay / deltax));
 
-            yAcc += Math.signum(deltay) * acc * Math.sin(angle);
+            yAcc += -Math.signum(deltay) * acc * Math.sin(angle);
 
-            xAcc += Math.signum(deltax) * acc * Math.cos(angle);
+            xAcc += -Math.signum(deltax) * acc * Math.cos(angle);
 
             // don't know why, it just don't work
             // yAcc += acc * Math.sin(angle);
