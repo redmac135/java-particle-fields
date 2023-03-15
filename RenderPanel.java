@@ -22,7 +22,7 @@ public class RenderPanel extends JPanel implements ActionListener {
     RenderPanel() {
         this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         this.setBackground(Color.black);
-        timer = new Timer(100, this); // We can use "this" because it implements action performed
+        timer = new Timer(10, this); // We can use "this" because it implements action performed
         timer.start();
         fields.add(new Field(100000, 100, 100));
         fields.add(new Field(100000, 400, 400));
