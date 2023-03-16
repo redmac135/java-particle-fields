@@ -1,5 +1,6 @@
 import java.lang.Math;
 import java.util.List;
+import java.util.Random;
 
 import java.awt.Graphics;
 import java.awt.Color;
@@ -7,6 +8,7 @@ import java.awt.Color;
 public class Particle {
     static final int DRAWN_WIDTH = 5;
     static final int OOB_NUM = 1000; // if out of panel by this number of units -> kill particle
+    Random random = new Random();
 
     private float xPos;
     private float yPos;
@@ -14,12 +16,23 @@ public class Particle {
     private float yVel;
     private double xAcc;
     private double yAcc;
+    private Color color;
 
     Particle(int xPos, int yPos, float xVel, float yVel) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.xVel = xVel;
         this.yVel = yVel;
+
+        this.color = randomColor();
+    }
+
+    private Color randomColor() {
+        float r = random.nextFloat();
+        float g = random.nextFloat();
+        float b = random.nextFloat();
+
+        return new Color(r, g, b);
     }
 
     public void tick(List<Field> fields) {
@@ -31,7 +44,7 @@ public class Particle {
     }
 
     public void paintParticle(Graphics g) {
-        g.setColor(Color.RED);
+        g.setColor(color);
         g.drawOval(Math.round(xPos), Math.round(yPos), DRAWN_WIDTH, DRAWN_WIDTH);
     }
 
