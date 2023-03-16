@@ -7,17 +7,24 @@ import java.awt.Graphics;
 public class Particles {
 
     Random random = new Random();
-    List<Particle> particles = new ArrayList<Particle> ();
+    List<Particle> particles = new ArrayList<Particle>();
 
-    Particles(int amount) {
+    public void createRandomParticles(int amount, int xSpread, int ySpread) {
         for (int i = 0; i <= amount; i++) {
             particles.add(new Particle(
-                random.nextInt(500),
-                random.nextInt(500),
-                random.nextInt(20) - 10,
-                random.nextInt(20) - 10
-            ));
+                    random.nextInt(xSpread),
+                    random.nextInt(ySpread),
+                    random.nextInt(20) - 10,
+                    random.nextInt(20) - 10));
         }
+    }
+
+    public void createParticleAtPoint(int xPos, int yPos) {
+        particles.add(new Particle(
+            xPos, 
+            yPos, 
+            random.nextInt(20) - 10, 
+            random.nextInt(20) - 10));
     }
 
     public void tickParticles(List<Field> fields) {
