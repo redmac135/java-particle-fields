@@ -35,12 +35,12 @@ public class Particle {
         return new Color(r, g, b);
     }
 
-    public void tick(List<Field> fields) {
+    public void tick(List<Field> fields, float deltaT) {
         updateAcc(fields);
-        xVel += xAcc;
-        yVel += yAcc;
-        xPos += xVel;
-        yPos += yVel;
+        xVel += xAcc * deltaT;
+        yVel += yAcc * deltaT;
+        xPos += xVel * deltaT;
+        yPos += yVel * deltaT;
     }
 
     public void paintParticle(Graphics g) {

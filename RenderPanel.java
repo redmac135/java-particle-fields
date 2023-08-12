@@ -12,22 +12,24 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class RenderPanel extends JPanel implements ActionListener, MouseListener  {
+public class RenderPanel extends JPanel implements ActionListener, MouseListener {
 
     static final int PANEL_WIDTH = 1000;
     static final int PANEL_HEIGHT = 1000;
+    static final int SUBSTEP_COUNT = 8;
+    int substepCounter = 0;
     boolean mousePressed = false;
 
     Timer timer;
     Particles particles = new Particles();
-    List<Field> fields = new ArrayList<Field> ();
+    List<Field> fields = new ArrayList<Field>();
 
     RenderPanel() {
         this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         this.setBackground(Color.black);
         this.addMouseListener(this);
 
-        timer = new Timer(10, this); // We can use "this" because it implements action performed
+        timer = new Timer(10 / SUBSTEP_COUNT, this); // We can use "this" because it implements action performed
         timer.start();
         particles.createRandomParticles(1000, PANEL_WIDTH, PANEL_HEIGHT);
         fields.add(new Field(100000, 400, 400));
@@ -37,15 +39,19 @@ public class RenderPanel extends JPanel implements ActionListener, MouseListener
     public void paint(Graphics g) {
         super.paint(g);
         particles.paintParticles(g);
-        for (int i=0; i < fields.size(); i++) {
+        for (int i = 0; i < fields.size(); i++) {
             fields.get(i).paintField(g);
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        particles.tickParticles(fields);
-        repaint();
+        substepCounter += 1;
+        particles.tickParticles(fields, (float) 1 / SUBSTEP_COUNT);
+        if (substepCounter == SUBSTEP_COUNT) {
+            repaint();
+            substepCounter = 0;
+        }
     }
 
     @Override
@@ -66,11 +72,11 @@ public class RenderPanel extends JPanel implements ActionListener, MouseListener
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        
+
     }
 }
